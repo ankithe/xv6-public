@@ -368,15 +368,16 @@ struct proc *p2;
         }
         */
 
-       /*
+       
         //check iterations left to decrease queue
         if (p2->iterationsLeft <= 0)
         {
           p2->queueNum--;
           p2->idleCount = 0;
           p2->iterationsLeft = queueIterations[p2->queueNum];
-        }*/
-
+        }
+        
+        /*
         if(p2->iterationsLeft <= 0){
           p2->queueNum--;
           p2->idleCount =0;
@@ -387,8 +388,10 @@ struct proc *p2;
               p->iterationsLeft = 24;
             }else if(p->queueNum == 0){
               p->iterationsLeft = 500;
-            }*/
-        }
+            }
+        }*/
+
+
 
         //update maxQueue
         if (p2->queueNum > maxQueue)
