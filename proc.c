@@ -364,19 +364,19 @@ struct proc *p2;
           p2->queueNum++;
           p2->idleCount = 0;
           p2->iterationsLeft = queueIterations[p2->queueNum];
-        }else{
-          p2->idleCount++;
         }
+        
+          p2->idleCount++;
         
 
        
         //check iterations left to decrease queue
-        // if (p2->iterationsLeft <= 0)
-        // {
-        //   p2->queueNum--;
-        //   p2->idleCount = 0;
-        //   p2->iterationsLeft = queueIterations[p2->queueNum];
-        // } 
+        if (p2->iterationsLeft <= 0)
+        {
+          p2->queueNum--;
+          p2->idleCount = 0;
+          p2->iterationsLeft = queueIterations[p2->queueNum];
+        } 
         
         /*
         if(p2->iterationsLeft <= 0){
