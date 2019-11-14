@@ -355,11 +355,9 @@ void scheduler(void)
       //adjust the queue level for each process and get the maxQueue
       for (p = ptable.proc; p < &ptable.proc[NPROC]; p++){
         int queueIterations[4] = {500, 24, 16, 8};
-
-//p2->idleCount * 10 >= queueIterations[p2->queueNum] &&
-        
+  
         //check idle count and move up to avoid starvation
-        if ( p->queueNum < 3)
+        if (p->idleCount * 10 >= queueIterations[p->queueNum] && p->queueNum < 3)
         {
           p->queueNum++;
           p->idleCount = 0;
@@ -399,7 +397,9 @@ void scheduler(void)
         {
           maxQueue = p->queueNum;
         }
-      } 
+      }
+
+      cprintf("%d", maxQueue); 
 
       if (p->state == RUNNABLE && p->queueNum == maxQueue)
       {
