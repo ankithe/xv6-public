@@ -356,10 +356,10 @@ struct proc *p2;
       for (p2 = ptable.proc; p2 < &ptable.proc[NPROC]; p2++){
         int queueIterations[4] = {500, 24, 16, 8};
 
-
+//p2->idleCount * 10 >= queueIterations[p2->queueNum] &&
         
         //check idle count and move up to avoid starvation
-        if (p2->idleCount * 10 >= queueIterations[p2->queueNum] && p2->queueNum < 3)
+        if ( p2->queueNum < 3)
         {
           p2->queueNum++;
           p2->idleCount = 0;
