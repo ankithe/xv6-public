@@ -377,10 +377,10 @@ struct proc *p2;
           p2->iterationsLeft = queueIterations[p2->queueNum];
         }*/
 
-        if(p->iterationsLeft <= 0){
-          p->queueNum--;
-          p->idleCount =0;
-          p->iterationsLeft = queueIterations[p->queueNum];
+        if(p2->iterationsLeft <= 0){
+          p2->queueNum--;
+          p2->idleCount =0;
+          p2->iterationsLeft = queueIterations[p2->queueNum];
             /*if(p->queueNum == 2){
               p->iterationsLeft = 16;
             }else if(p->queueNum == 1){
@@ -388,7 +388,7 @@ struct proc *p2;
             }else if(p->queueNum == 0){
               p->iterationsLeft = 500;
             }*/
-      }
+        }
 
         //update maxQueue
         if (p2->queueNum > maxQueue)
