@@ -354,7 +354,7 @@ struct proc *p2;
     
       //adjust the queue level for each process and get the maxQueue
       for (p2 = ptable.proc; p2 < &ptable.proc[NPROC]; p2++){
-        int queueIterations[4] = {500, 24, 16, 8};
+        //int queueIterations[4] = {500, 24, 16, 8};
 
 
         /*
