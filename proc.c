@@ -359,14 +359,14 @@ struct proc *p2;
 
         
         //check idle count and move up to avoid starvation
-        if (p2->idleCount >= queueIterations[p2->queueNum] && p2->queueNum < 3)
+        if (p2->idleCount * 10 >= queueIterations[p2->queueNum] && p2->queueNum < 3)
         {
           p2->queueNum++;
           p2->idleCount = 0;
           p2->iterationsLeft = queueIterations[p2->queueNum];
         }
-        
-          p2->idleCount++;
+
+        p2->idleCount++;
         
 
        
