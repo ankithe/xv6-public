@@ -357,39 +357,21 @@ void scheduler(void)
         int queueIterations[4] = {500, 24, 16, 8};
   
         //check idle count and move up to avoid starvation
-        if (p->idleCount * 10 >= queueIterations[p->queueNum] && p->queueNum < 3)
+        if (p->idleCount >= queueIterations[p->queueNum] && p->queueNum < 3)
         {
           p->queueNum++;
           p->idleCount = 0;
           p->iterationsLeft = queueIterations[p->queueNum];
         }
-
         p->idleCount++;
-        
-
-       
+           
         //check iterations left to decrease queue
         if (p->iterationsLeft <= 0)
         {
           p->queueNum--;
           p->idleCount = 0;
           p->iterationsLeft = queueIterations[p->queueNum];
-        } 
-        
-        /*
-        if(p2->iterationsLeft <= 0){
-          p2->queueNum--;
-          p2->idleCount =0;
-          p2->iterationsLeft = queueIterations[p2->queueNum];
-            if(p->queueNum == 2){
-              p->iterationsLeft = 16;
-            }else if(p->queueNum == 1){
-              p->iterationsLeft = 24;
-            }else if(p->queueNum == 0){
-              p->iterationsLeft = 500;
-            }
-        }*/
-
+        }
 
 
         //update maxQueue
@@ -397,11 +379,16 @@ void scheduler(void)
         {
           maxQueue = p->queueNum;
         }
+
+        //check if process is in queue 2
+        if(p->queueNum != 3){
+          cprintf("Debug: you are in queue < 2 : [%d]", p->queueNum);
+        }
       }
 
       //cprintf("%d", maxQueue); 
       //&& p->queueNum == maxQueue
-      if (p->state == RUNNABLE )
+      if (p->state == RUNNABLE && p->queueNum == maxQueue)
       {
 
         //Once selected to run:
