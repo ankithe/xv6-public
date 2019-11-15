@@ -366,7 +366,7 @@ void scheduler(void)
         p->idleCount++;
            
         //check iterations left to decrease queue
-        if (p->iterationsLeft <= 0)
+        if (p->iterationsLeft <= 0 && p->queueNum > 0)
         {
           p->queueNum--;
           p->idleCount = 0;
