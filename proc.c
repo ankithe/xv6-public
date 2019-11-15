@@ -381,9 +381,9 @@ void scheduler(void)
         }
 
         //check if process is in queue 2
-        if(p2->queueNum != 3){
-          cprintf("Debug: you are in queue < 3 [%s] : [%d] \n",p->name, p->queueNum);
-        }
+        // if(p2->queueNum != 3){
+        //   cprintf("Debug: you are in queue < 3 [%s] : [%d] \n",p->name, p->queueNum);
+        // }
       }
 
       //cprintf("%d", maxQueue); 
