@@ -391,11 +391,11 @@ void scheduler(void)
       {
 
         //check iterations left to decrease queue
-        if (p2->iterationsLeft <= 0 && p2->queueNum > 0)
+        if (p->iterationsLeft <= 0 && p->queueNum > 0)
         {
-          p2->queueNum--;
-          p2->idleCount = 0;
-          p2->iterationsLeft = queueIterations[p2->queueNum];
+          p->queueNum--;
+          p->idleCount = 0;
+          p->iterationsLeft = queueIterations[p->queueNum];
         }
 
         flag = true;
