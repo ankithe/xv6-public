@@ -346,7 +346,6 @@ void scheduler(void)
   {
     // Enable interrupts on this processor.
     sti();
-    bool flag = true;
   
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
@@ -359,7 +358,6 @@ void scheduler(void)
     
       //adjust the queue level for each process and get the maxQueue
       for (p2 = ptable.proc; p2 < &ptable.proc[NPROC]; p2++){
-        if(flag){
         //update idle count
         p2->idleCount++;
 
@@ -377,8 +375,6 @@ void scheduler(void)
         {
           maxQueue = p2->queueNum;
         }
-      }
-      //flag = false;
 
       }
 
@@ -395,7 +391,6 @@ void scheduler(void)
           p->iterationsLeft = queueIterations[p->queueNum];
         }
 
-        flag = true;
 
         //Once selected to run:
         //1. reset it's count of idle iterations to 0
