@@ -377,8 +377,9 @@ void scheduler(void)
         {
           maxQueue = p2->queueNum;
         }
-        //flag = false;
       }
+      flag = false;
+
       }
 
       //cprintf("%d", maxQueue); 
