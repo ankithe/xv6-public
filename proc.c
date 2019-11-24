@@ -6,6 +6,7 @@
 #include "x86.h"
 #include "proc.h"
 #include "spinlock.h"
+#include <stdbool.h>
 
 struct
 {
@@ -345,16 +346,23 @@ void scheduler(void)
   {
     // Enable interrupts on this processor.
     sti();
+    bool flag = true;
   
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
+    int queueIterations[4] = {500, 24, 16, 8};
+
     for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
     {
+
       int maxQueue = 0;
     
       //adjust the queue level for each process and get the maxQueue
       for (p2 = ptable.proc; p2 < &ptable.proc[NPROC]; p2++){
-        int queueIterations[4] = {500, 24, 16, 8};
+        if(flag){
+        //update idle count
+        p2->idleCount++;
+
   
         //check idle count and move up to avoid starvation
         if (p2->idleCount >= queueIterations[p2->queueNum] && p2->queueNum < 3)
@@ -363,18 +371,8 @@ void scheduler(void)
           p2->idleCount = 0;
           p2->iterationsLeft = queueIterations[p2->queueNum];
         }
-        p2->idleCount++;
-           
-        //check iterations left to decrease queue
-        if (p2->iterationsLeft <= 0 && p2->queueNum > 0)
-        {
-          p2->queueNum--;
-          p2->idleCount = 0;
-          p2->iterationsLeft = queueIterations[p2->queueNum];
-        }
-
-
-        //update maxQueue
+      
+        //find maxQueue
         if (p2->queueNum > maxQueue)
         {
           maxQueue = p2->queueNum;
@@ -385,11 +383,22 @@ void scheduler(void)
         //   cprintf("Debug: you are in queue < 3 [%s] : [%d] \n",p->name, p->queueNum);
         // }
       }
+      }
 
       //cprintf("%d", maxQueue); 
       //&& p->queueNum == maxQueue
       if (p->state == RUNNABLE && p->queueNum == maxQueue)
       {
+
+        //check iterations left to decrease queue
+        if (p2->iterationsLeft <= 0 && p2->queueNum > 0)
+        {
+          p2->queueNum--;
+          p2->idleCount = 0;
+          p2->iterationsLeft = queueIterations[p2->queueNum];
+        }
+
+        flag = true;
 
         //Once selected to run:
         //1. reset it's count of idle iterations to 0
