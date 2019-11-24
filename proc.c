@@ -383,7 +383,14 @@ void scheduler(void)
       if (p->state == RUNNABLE && p->queueNum == maxQueue)
       {
 
-        //check iterations left to decrease queue
+        //Once selected to run:
+        //1. reset it's count of idle iterations to 0
+        //2. reduce it's number of runs at this queue level by 1
+        //3. switch it in as before.
+        p->idleCount = 0;
+        p->iterationsLeft--;
+
+                //check iterations left to decrease queue
         if (p->iterationsLeft <= 0 && p->queueNum > 0)
         {
           p->queueNum--;
@@ -391,13 +398,6 @@ void scheduler(void)
           p->iterationsLeft = queueIterations[p->queueNum];
         }
 
-
-        //Once selected to run:
-        //1. reset it's count of idle iterations to 0
-        //2. reduce it's number of runs at this queue level by 1
-        //3. switch it in as before.
-        p->idleCount = 0;
-        p->iterationsLeft--;
 
         // Switch to chosen process.  It is the process's job
         // to release ptable.lock and then reacquire it
